@@ -13,17 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function(Blueprint $table) {
-            
-            $table->bigInteger('level_id')->unsigned()
-                ->nullable()
-                ->after('id');
-            $table->dropColumn('level_id');
+        Schema::create('groups', function (Blueprint $table) {
+            $table->bigIncrements(id);
 
-            $table->foreign('level_id')->references('id')->on('level')
-               ->onDelete('set null')
-               ->onUpdate('cascade');
+            $table->string('name');
 
+            $table->timestamps();
         });
     }
 
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('groups');
     }
 };
